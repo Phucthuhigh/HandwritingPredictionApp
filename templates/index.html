@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Paint Clone</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+	<div class="paint-clone">
+		<canvas id="canvas" width="500" height="500" class="border-2 border-black cursor-crosshair"></canvas>
+		<div class="paint-tools flex justify-between mt-[20px] max-w-[500px] items-center">
+			<input type="range"
+				id="brush-size" min="1"
+				max="50" value="20" class="p-[10px] bg-[#333] text-white border-none cursor-pointer">
+			<input type="color"
+				id="color-picker" class="cursor-pointer">
+			<button id="pen" class="p-[10px] bg-[#0800ff] text-white border-none cursor-pointer">
+				Pen
+			</button>
+			<button id="eraser" class="p-[10px] bg-[#ee00cf] text-white border-none cursor-pointer">
+				Eraser
+			</button>
+			<button id="clear-canvas" class="p-[10px] bg-[#ff3333] text-white border-none cursor-pointer">
+				Clear
+			</button>
+            <button id="save-canvas" class="p-[10px] bg-yellow-500 text-white border-none cursor-pointer">
+				Save
+			</button>
+			<button id="predict-canvas" class="p-[10px] bg-green-500 text-white border-none cursor-pointer">
+				Predict
+			</button>
+		</div>
+		<div class="flex gap-2 mt-2">
+			<span>Label</span>
+			<input id="label" type="text" maxlength="1" class="border-2">
+		</div>
+	</div>
+	<script src="{{ url_for('static', filename='index.js') }}" charset="utf-8"></script>
+</body>
+
+</html>
