@@ -10,7 +10,10 @@ const clearCanvas = document.getElementById('clear-canvas');
 const saveCanvas = document.getElementById('save-canvas');
 const predictCanvas = document.getElementById('predict-canvas');
 const inputLabel = document.getElementById("label");
+const alertBox = document.getElementById("alertBox");
+
 let isDrawing = false;
+let isErase = false;
 
 //Initializing the canvas
 ctx.fillStyle = "#ffffff";
@@ -34,7 +37,8 @@ function endPosition() {
 //Function to draw on the Canvas
 function draw(e) {
 	if (!isDrawing) return;
-	ctx.strokeStyle = colorPicker.value; //pick the color
+	if (isErase) ctx.strokeStyle = "#ffffff";
+	else ctx.strokeStyle = colorPicker.value; //pick the color
 	ctx.lineWidth = brushSize.value; //Select the brush size
 	ctx.lineTo(
 		e.clientX - canvas.offsetLeft,
@@ -87,14 +91,23 @@ const eraserButton = document.getElementById('eraser');
 
 //switing to pen mode
 function activatePen() {
-	ctx.globalCompositeOperation = 'source-over';
+	isErase = false;
 	ctx.strokeStyle = colorPicker.value;
 }
 
 //switching to eraser mode
 function activateEraser() {
-	ctx.globalCompositeOperation = 'destination-out';
-	ctx.strokeStyle = 'rgba(0, 0, 0, 0)';
+	isErase = true;
+	ctx.strokeStyle = "#ffffff";
+}
+
+function handleAlert(success, message) {
+	alertBox.className = success ? "text-green-500" : "text-red-500";
+	alertBox.innerHTML = message;
+	setTimeout(() => {
+		alertBox.className = "";
+		alertBox.innerHTML = "";
+	}, 2000);
 }
 
 penButton.addEventListener('click', () => {
@@ -107,6 +120,10 @@ eraserButton.addEventListener('click', () => {
 
 saveCanvas.addEventListener('click', async () => {
     let imgURL = canvas.toDataURL();
+	if (inputLabel.value == "") {
+		handleAlert(false, "Label field is required");
+		return;
+	}
 	try {
 		const res = await fetch("/save", {
 			method: "POST",
@@ -117,6 +134,11 @@ saveCanvas.addEventListener('click', async () => {
 		})
 		const data = await res.json();
 		console.log(data.success);
+		if (data.success) {
+			handleAlert(data.success, "Save successfully!");
+		} else {
+			handleAlert(data.success, "Server error:(");
+		}
 	} catch (error) {
 		console.log(error);
 	}
