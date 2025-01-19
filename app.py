@@ -3,12 +3,13 @@ import numpy as np
 from base64 import b64decode, b64encode
 from PIL import Image
 import io
-import datetime
+from whitenoise import WhiteNoise
 
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 
 app = Flask(__name__)
+app.wsgi_app = WhiteNoise(app.wsgi_app, root="static/")
 
 uri = "mongodb+srv://phucthuhigh:phucthuhigh1701@handwritting.fxzvn.mongodb.net/?retryWrites=true&w=majority&appName=handwritting"
 
