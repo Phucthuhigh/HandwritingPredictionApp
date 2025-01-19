@@ -6,11 +6,11 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="h-screen w-full flex justify-between items-center flex-col">
-	<p class="mb-2 text-2xl font-bold">Vẽ lên phần canvas phía dưới, ghi con số mình vừa vẽ vào ô label, rồi ấn save là xong :)</p>
-	<div class="paint-clone flex flex-col justify-between items-center gap-4">
+<body class="h-screen w-full flex justify-center items-center flex-col">
+	<div class="paint-clone flex flex-col justify-center items-center gap-4">
+		<p class="mb-2 text-2xl font-bold">Vẽ lên phần canvas phía dưới, ghi con số mình vừa vẽ vào ô label, rồi ấn save là xong :)</p>
 		<canvas id="canvas" width="500" height="500" class="border-2 border-black cursor-crosshair"></canvas>
-		<div class="paint-tools flex justify-between mt-[20px] max-w-[500px] items-center gap-4">
+		<div class="paint-tools flex justify-center mt-[20px] max-w-[500px] items-center gap-4">
 			<input type="range"
 				id="brush-size" min="1"
 				max="50" value="20" class="p-[10px] bg-[#333] text-white border-none cursor-pointer">
