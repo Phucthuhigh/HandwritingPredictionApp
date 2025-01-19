@@ -8,7 +8,7 @@ from whitenoise import WhiteNoise
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='', static_folder="./static")
 app.wsgi_app = WhiteNoise(app.wsgi_app, root="static/")
 
 uri = "mongodb+srv://phucthuhigh:phucthuhigh1701@handwritting.fxzvn.mongodb.net/?retryWrites=true&w=majority&appName=handwritting"
