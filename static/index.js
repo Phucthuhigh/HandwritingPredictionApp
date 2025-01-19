@@ -23,9 +23,9 @@ ctx.lineCap = 'round';
 ctx.strokeStyle = 'black';
 
 //start drawing
-function startPosition(e) {
+function startPosition(positionX, positionY) {
 	isDrawing = true;
-	draw(e);
+	draw(positionX, positionY);
 }
 
 //end drawing
@@ -35,20 +35,20 @@ function endPosition() {
 }
 
 //Function to draw on the Canvas
-function draw(e) {
+function draw(positionX, positionY) {
 	if (!isDrawing) return;
 	if (isErase) ctx.strokeStyle = "#ffffff";
 	else ctx.strokeStyle = colorPicker.value; //pick the color
 	ctx.lineWidth = brushSize.value; //Select the brush size
 	ctx.lineTo(
-		e.clientX - canvas.offsetLeft,
-		e.clientY - canvas.offsetTop
+		positionX - canvas.offsetLeft,
+		positionY - canvas.offsetTop
 	);
 	ctx.stroke();
 	ctx.beginPath();
 	ctx.moveTo(
-		e.clientX - canvas.offsetLeft,
-		e.clientY - canvas.offsetTop
+		positionX - canvas.offsetLeft,
+		positionY - canvas.offsetTop
 	);
 }
 
@@ -61,13 +61,15 @@ function downloadImage(data, filename = 'untitled.jpeg') {
 }
 
 //event listener for differnt mouse actions
-canvas.addEventListener('mousedown', startPosition);
+canvas.addEventListener('mousedown', (e) => startPosition(e.clientX, e.clientY));
 canvas.addEventListener('mouseup', endPosition);
-canvas.addEventListener('mousemove', draw);
-canvas.addEventListener('touchstart', startPosition);
+canvas.addEventListener('mousemove', (e) => draw(e.clientX, e.clientY));
+canvas.addEventListener('touchstart', (e) => startPosition(e.touches[0].clientX, e.touches[0].clientY));
 canvas.addEventListener('touchend', endPosition);
 canvas.addEventListener('touchmove', (e) => {
-	draw(e);
+	console.log("touch move");
+	
+	draw(e.touches[0].clientX, e.touches[0].clientY);
 });
 clearCanvas.addEventListener('click', () => {
     ctx.clearRect(
