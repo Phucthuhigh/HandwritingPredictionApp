@@ -140,7 +140,6 @@ saveCanvas.addEventListener('click', async () => {
 			body: JSON.stringify({label: inputLabel.value, image_data: imgURL})
 		})
 		const data = await res.json();
-		console.log(data.success);
 		if (data.success) {
 			handleAlert(data.success, "Save successfully!");
 		} else {
