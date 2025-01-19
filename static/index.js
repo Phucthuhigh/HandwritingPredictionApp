@@ -11,6 +11,7 @@ const saveCanvas = document.getElementById('save-canvas');
 const predictCanvas = document.getElementById('predict-canvas');
 const inputLabel = document.getElementById("label");
 const alertBox = document.getElementById("alertBox");
+const saveAndDeleteBox = document.getElementById("save-and-del");
 
 let isDrawing = false;
 let isErase = false;
@@ -142,6 +143,12 @@ saveCanvas.addEventListener('click', async () => {
 		const data = await res.json();
 		if (data.success) {
 			handleAlert(data.success, "Save successfully!");
+			console.log(saveAndDeleteBox.value);
+			
+			if (saveAndDeleteBox.checked) {
+				ctx.fillStyle = "#ffffff";
+				ctx.fillRect(0, 0, canvas.width, canvas.height);
+			}
 		} else {
 			handleAlert(data.success, "Server error:(");
 		}
