@@ -4,14 +4,11 @@ from base64 import b64decode, b64encode
 from PIL import Image
 import io
 from whitenoise import WhiteNoise
-import pickle
 
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 
 import torch
-import os
-import cv2
 import numpy as np
 
 class CNN(torch.nn.Module):
@@ -52,7 +49,7 @@ class CNN(torch.nn.Module):
 
 device = torch.device('cpu')
 cnn = CNN()
-cnn.load_state_dict(torch.load("model.pth", map_location=device))
+cnn.load_state_dict(torch.load("./model/model.pth", map_location=device))
 cnn.eval()
 
 app = Flask(__name__, static_url_path='', static_folder="./static")
